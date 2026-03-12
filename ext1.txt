@@ -1,0 +1,509 @@
+SQL> create table student(
+  2  
+SQL> create table item(
+  2  id varchar(5),
+  3  name varchar(20),
+  4  type varchar(20),
+  5  price int,
+  6  quality varchar(20),
+  7  item_pack_date date
+  8  );
+
+Table created.
+
+SQL> insert into item values('i1,',dairymilk,',chocolate',500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1,',dairymilk','chocolate,'500,'dood,',12-aug-2000');
+insert into item values('i1,',dairymilk','chocolate,'500,'dood,',12-aug-2000')
+                                       *
+ERROR at line 1:
+ORA-00917: missing comma 
+
+
+SQL> insert into item values ('i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1','dairymilk','chocolate',500,'goog,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values(i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000);
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values(i1','dairymilk','chocolate,'500,'good','12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1','dairymilk','chocolate',500,'good','12-aug-2000');
+
+1 row created.
+
+SQL> insert into item values('i2','kajukatri','mithai',1000,'verygood','15-aug-2026');
+
+1 row created.
+
+SQL> insert into item values('i3','pizza','fastfood',350,'average','20-feb-2015');
+
+1 row created.
+
+SQL> insert into item values('i4','orangejuice','juice',50,'best','05-feb-2016');
+
+1 row created.
+
+SQL> insert into item values('i5','vanilla cack','bakery item',2000,'good','01-jan-2016');
+
+1 row created.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
+
+SQL> select *from item where id=i1,i2,i3,i4,i5;
+select *from item where id=i1,i2,i3,i4,i5
+                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select *from item where id =i1;
+select *from item where id =i1
+                            *
+ERROR at line 1:
+ORA-00904: "I1": invalid identifier 
+
+
+SQL> select *from item where id=name;
+
+no rows selected
+
+SQL> select *from item where name=orangejuice;
+select *from item where name=orangejuice
+                             *
+ERROR at line 1:
+ORA-00904: "ORANGEJUICE": invalid identifier 
+
+
+SQL> select *from item where name="orangejuice";
+select *from item where name="orangejuice"
+                             *
+ERROR at line 1:
+ORA-00904: "orangejuice": invalid identifier 
+
+
+SQL> select *from item where name="orangejuice":
+  2  where name='juice';
+SP2-0552: Bind variable "WHERE" not declared.
+SQL> select *from name,item;
+select *from name,item
+             *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> rows item;
+SP2-0042: unknown command "rows item" - rest of line ignored.
+SQL> select item-pack
+  2  from item
+  3  where type='mithai';
+select item-pack
+            *
+ERROR at line 1:
+ORA-00904: "PACK": invalid identifier 
+
+
+SQL> select item-pack from item
+  2  where type="chocolate";
+where type="chocolate"
+           *
+ERROR at line 2:
+ORA-00904: "chocolate": invalid identifier 
+
+
+SQL> rows selected;
+SP2-0734: unknown command beginning "rows selec..." - rest of line ignored.
+SQL> select name
+  2  from item
+  3  where name='mithai';
+
+no rows selected
+
+SQL> select name
+  2  from item
+  3  where name='dairymilk';
+
+NAME                                                                            
+--------------------                                                            
+dairymilk                                                                       
+
+SQL> commit;
+
+Commit complete.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
+
+SQL> delet from item
+SP2-0734: unknown command beginning "delet from..." - rest of line ignored.
+SQL> delet from item where id='i5';
+SP2-0734: unknown command beginning "delet from..." - rest of line ignored.
+SQL> delete from item where id='i5';
+
+1 row deleted.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
+
+SQL> savepoint i3;
+
+Savepoint created.
+
+SQL> delete from item where id='i5';
+
+1 row deleted.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+
+SQL> rollback to i3;
+
+Rollback complete.
+
+SQL> alter table item add triper varchar
+  2  
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> alter table item add triper varchar(20);
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+ TRIPER                                             VARCHAR2(20)
+
+SQL> insert into item values('i6','journey','hotel book',800,'very good','40-mar-2026');
+insert into item values('i6','journey','hotel book',800,'very good','40-mar-2026')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> alter table item add id varchar(6);
+alter table item add id varchar(6)
+                     *
+ERROR at line 1:
+ORA-01430: column being added already exists in table 
+
+
+SQL> alter table item drop column triper;
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> alter table item modify id varchar(6);
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(6)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> alter table item add varchar(20
+  2  
+SQL> alter table item add triper varchar(20);
+
+Table altered.
+
+SQL> insert into item values('i6','journey','books',600,'excellent','14-mar-2026');
+insert into item values('i6','journey','books',600,'excellent','14-mar-2026')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(6)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+ TRIPER                                             VARCHAR2(20)
+
+SQL> alter table item drop column triper;
+
+Table altered.
+
+SQL> insert into item values('i6','journey','travel',600,'excellent','14-mar-2026');
+
+1 row created.
+
+SQL> select *from item;
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i1     dairymilk            chocolate                   500 good                
+12-AUG-00                                                                       
+                                                                                
+i2     kajukatri            mithai                     1000 verygood            
+15-AUG-26                                                                       
+                                                                                
+i3     pizza                fastfood                    350 average             
+20-FEB-15                                                                       
+                                                                                
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i4     orangejuice          juice                        50 best                
+05-FEB-16                                                                       
+                                                                                
+i5     vanilla cack         bakery item                2000 good                
+01-JAN-16                                                                       
+                                                                                
+i6     journey              travel                      600 excellent           
+14-MAR-26                                                                       
+                                                                                
+
+6 rows selected.
+
+SQL> column item_pack format a15;
+SQL> select * from item;
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i1     dairymilk            chocolate                   500 good                
+12-AUG-00                                                                       
+                                                                                
+i2     kajukatri            mithai                     1000 verygood            
+15-AUG-26                                                                       
+                                                                                
+i3     pizza                fastfood                    350 average             
+20-FEB-15                                                                       
+                                                                                
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i4     orangejuice          juice                        50 best                
+05-FEB-16                                                                       
+                                                                                
+i5     vanilla cack         bakery item                2000 good                
+01-JAN-16                                                                       
+                                                                                
+i6     journey              travel                      600 excellent           
+14-MAR-26                                                                       
+                                                                                
+
+6 rows selected.
+
+SQL> column name formate a15;
+SP2-0158: unknown COLUMN option "formate"
+SQL> set linesize 120;
+SQL> select *from item;
+
+ID     NAME                 TYPE                      PRICE QUALITY              ITEM_PACK                              
+------ -------------------- -------------------- ---------- -------------------- ---------                              
+i1     dairymilk            chocolate                   500 good                 12-AUG-00                              
+i2     kajukatri            mithai                     1000 verygood             15-AUG-26                              
+i3     pizza                fastfood                    350 average              20-FEB-15                              
+i4     orangejuice          juice                        50 best                 05-FEB-16                              
+i5     vanilla cack         bakery item                2000 good                 01-JAN-16                              
+i6     journey              travel                      600 excellent            14-MAR-26                              
+
+6 rows selected.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
