@@ -1,386 +1,506 @@
-SQL> create table deposit(
-  2  actno number(5),
-  3  cname varchar2(15),
-  4  bname varchar2(15),
-  5  amount number(9,2),
-  6  adate date
-  7  );
+SQL> create table student(
+  2  
+SQL> create table item(
+  2  id varchar(5),
+  3  name varchar(20),
+  4  type varchar(20),
+  5  price int,
+  6  quality varchar(20),
+  7  item_pack_date date
+  8  );
 
 Table created.
 
-SQL> create table branch(
-  2  bname varchar2(15),
-  3  city varchar2(15)
-  4  );
-
-Table created.
-
-SQL> create table customers(
-  2  cname varchar2(15),
-  3  city varchar2(15),
-  4  );
-)
-*
-ERROR at line 4:
-ORA-00904: : invalid identifier 
+SQL> insert into item values('i1,',dairymilk,',chocolate',500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
 
 
-SQL> create table customers(
-  2  cname varchar2(15),
-  3  city varchar2(15)
-  4  );
+SQL> insert into item values('i1,',dairymilk','chocolate,'500,'dood,',12-aug-2000');
+insert into item values('i1,',dairymilk','chocolate,'500,'dood,',12-aug-2000')
+                                       *
+ERROR at line 1:
+ORA-00917: missing comma 
 
-Table created.
 
-SQL> create table borrow(
-  2  loanno varchar2(15),
-  3  cname varchar2(15),
-  4  bname varchar2(15),
-  5  amount number(9,2)
-  6  );
+SQL> insert into item values ('i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
 
-Table created.
 
-SQL> select *from deposit;
+SQL> insert into item values('i1','dairymilk','chocolate',500,'goog,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values(i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000);
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1,',dairymilk,',chocolate,'500,'good,',12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values(i1','dairymilk','chocolate,'500,'good','12-aug-2000');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> insert into item values('i1','dairymilk','chocolate',500,'good','12-aug-2000');
+
+1 row created.
+
+SQL> insert into item values('i2','kajukatri','mithai',1000,'verygood','15-aug-2026');
+
+1 row created.
+
+SQL> insert into item values('i3','pizza','fastfood',350,'average','20-feb-2015');
+
+1 row created.
+
+SQL> insert into item values('i4','orangejuice','juice',50,'best','05-feb-2016');
+
+1 row created.
+
+SQL> insert into item values('i5','vanilla cack','bakery item',2000,'good','01-jan-2016');
+
+1 row created.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
+
+SQL> select *from item where id=i1,i2,i3,i4,i5;
+select *from item where id=i1,i2,i3,i4,i5
+                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select *from item where id =i1;
+select *from item where id =i1
+                            *
+ERROR at line 1:
+ORA-00904: "I1": invalid identifier 
+
+
+SQL> select *from item where id=name;
 
 no rows selected
 
-SQL> desc deposit;
- Name                                      Null?    Type
- ----------------------------------------- -------- ----------------------------
- ACTNO                                              NUMBER(5)
- CNAME                                              VARCHAR2(15)
- BNAME                                              VARCHAR2(15)
- AMOUNT                                             NUMBER(9,2)
- ADATE                                              DATE
-
-SQL> desc branch;
- Name                                      Null?    Type
- ----------------------------------------- -------- ----------------------------
- BNAME                                              VARCHAR2(15)
- CITY                                               VARCHAR2(15)
-
-SQL> desc customer;
-ERROR:
-ORA-04043: object customer does not exist 
+SQL> select *from item where name=orangejuice;
+select *from item where name=orangejuice
+                             *
+ERROR at line 1:
+ORA-00904: "ORANGEJUICE": invalid identifier 
 
 
-SQL> desc customers;
- Name                                      Null?    Type
- ----------------------------------------- -------- ----------------------------
- CNAME                                              VARCHAR2(15)
- CITY                                               VARCHAR2(15)
+SQL> select *from item where name="orangejuice";
+select *from item where name="orangejuice"
+                             *
+ERROR at line 1:
+ORA-00904: "orangejuice": invalid identifier 
 
-SQL> desc borrow;
- Name                                      Null?    Type
- ----------------------------------------- -------- ----------------------------
- LOANNO                                             VARCHAR2(15)
- CNAME                                              VARCHAR2(15)
- BNAME                                              VARCHAR2(15)
- AMOUNT                                             NUMBER(9,2)
 
-SQL> insert into deposite values(100,'anil','vrce',1000.00,'01_mar_95');
-insert into deposite values(100,'anil','vrce',1000.00,'01_mar_95')
-            *
+SQL> select *from item where name="orangejuice":
+  2  where name='juice';
+SP2-0552: Bind variable "WHERE" not declared.
+SQL> select *from name,item;
+select *from name,item
+             *
 ERROR at line 1:
 ORA-00942: table or view does not exist 
 
 
-SQL> insert into deposit values(100,'anil','vrce',1000.00,'01-mar-95');
-
-1 row created.
-
-SQL> insert into deposit values(101,'sunil','anjli',5000.00,'04-jan-96');
-
-1 row created.
-
-SQL> insert into deposit values(102,'mehul,
-  2  
-SQL> insert into deposit values(102,'mehul','karolbagh',3500.00,'17-nov-95');
-
-1 row created.
-
-SQL> insert into deposit values(104,'madhuri','chandi',1200.00,'17-dec-95');
-
-1 row created.
-
-SQL> insert into deposit values(105,'pramod','m g road',3000.00,'27-mar-96');
-
-1 row created.
-
-SQL> insert into deposit values(106,'sandeep,',andheri',2000.00,'31-mar-96');
-ERROR:
-ORA-01756: quoted string not properly terminated 
-
-
-SQL> insert into deposit values(106,'sandip','andheri',2000.00,'31-mar-96');
-
-1 row created.
-
-SQL> insert into  deposit values(107,'shivani,',virar',1000.00,'05-sep-95');
-ERROR:
-ORA-01756: quoted string not properly terminated 
-
-
-SQL> insert into deposit values(107,'shivni,',virar',1000.00,'05-sep-95');
-ERROR:
-ORA-01756: quoted string not properly terminated 
-
-
-SQL> insert into deposit values(107,'shivani','virar',10000.00,'05-sep-95');
-
-1 row created.
-
-SQL> insert into deposit values(108,'kranti,',nehru place',5000.00,'02-jul-95');
-ERROR:
-ORA-01756: quoted string not properly terminated 
-
-
-SQL> insert into deposit values(108,'kranti','nehru place',5000.00,'02-jul-95');
-
-1 row created.
-
-SQL> insert into deposit values(109,'minu','powai',7000.00,'10-aug-95');
-
-1 row created.
-
-SQL> insert into branch values('vrce','nagpur');
-
-1 row created.
-
-SQL> insert into branch values('ajni','nagpur');
-
-1 row created.
-
-SQL> insert into branch values('karolbagh','delhi');
-
-1 row created.
-
-SQL> insert into branch values('chandi','delhi');
-
-1 row created.
-
-SQL> insert into branch values('m g road','bangalore');
-
-1 row created.
-
-SQL> insert into branch values('andheri','bombay');
-
-1 row created.
-
-SQL> insert into branch values('virar','bombay');
-
-1 row created.
-
-SQL> insert into branch values('nehru place','delhi');
-
-1 row created.
-
-SQL> insert into branch values('powai','bombay');
-
-1 row created.
-
-SQL> insert into branch values('anil','calcutta');
-
-1 row created.
-
-SQL> insert into customers values('anil','delhi');
-
-1 row created.
-
-SQL> insert into customers values('mehul','baroda');
-
-1 row created.
-
-SQL> insert into customers values('mandar','patna');
-
-1 row created.
-
-SQL> insert into customers values('madhuri','nagpur');
-
-1 row created.
-
-SQL> insert into customers values('pramod','nagpur');
-
-1 row created.
-
-SQL> insert into customers values('sandip','surat');
-
-1 row created.
-
-SQL> insert into customers values('shivani','bombay');
-
-1 row created.
-
-SQL> insert into customers values('kranti','bombay');
-
-1 row created.
-
-SQL> insert into customers values('minu','bombay');
-
-1 row created.
-
-SQL> insert into borrow values(201,'anil','vrce',1000.00);
-
-1 row created.
-
-SQL> insert into borrow values(206,'mehu','anji',5000.00);
-
-1 row created.
-
-SQL> insert into borrow  values(311,'sunil','dharampeth',3000.00);
-
-1 row created.
-
-SQL> insert into borrow values(321,'madhuri','andheri',2000.00);
-
-1 row created.
-
-SQL> insert into borrow values(375,'pramod','virar',800.00);
-
-1 row created.
-
-SQL> insert into borrow values(481,'kranti','nehru place',3000.00);
-
-1 row created.
+SQL> rows item;
+SP2-0042: unknown command "rows item" - rest of line ignored.
+SQL> select item-pack
+  2  from item
+  3  where type='mithai';
+select item-pack
+            *
+ERROR at line 1:
+ORA-00904: "PACK": invalid identifier 
+
+
+SQL> select item-pack from item
+  2  where type="chocolate";
+where type="chocolate"
+           *
+ERROR at line 2:
+ORA-00904: "chocolate": invalid identifier 
+
+
+SQL> rows selected;
+SP2-0734: unknown command beginning "rows selec..." - rest of line ignored.
+SQL> select name
+  2  from item
+  3  where name='mithai';
+
+no rows selected
+
+SQL> select name
+  2  from item
+  3  where name='dairymilk';
+
+NAME                                                                            
+--------------------                                                            
+dairymilk                                                                       
 
 SQL> commit;
 
 Commit complete.
 
-SQL> select *from deposit;
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
 
-     ACTNO CNAME           BNAME               AMOUNT ADATE                     
----------- --------------- --------------- ---------- ---------                 
-       100 anil            vrce                  1000 01-MAR-95                 
-       101 sunil           anjli                 5000 04-JAN-96                 
-       102 mehul           karolbagh             3500 17-NOV-95                 
-       104 madhuri         chandi                1200 17-DEC-95                 
-       105 pramod          m g road              3000 27-MAR-96                 
-       106 sandip          andheri               2000 31-MAR-96                 
-       107 shivani         virar                10000 05-SEP-95                 
-       108 kranti          nehru place           5000 02-JUL-95                 
-       109 minu            powai                 7000 10-AUG-95                 
+SQL> select *from item;
 
-9 rows selected.
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
 
-SQL> select *from borrow;
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
 
-LOANNO          CNAME           BNAME               AMOUNT                      
---------------- --------------- --------------- ----------                      
-201             anil            vrce                  1000                      
-206             mehu            anji                  5000                      
-311             sunil           dharampeth            3000                      
-321             madhuri         andheri               2000                      
-375             pramod          virar                  800                      
-481             kranti          nehru place           3000                      
+SQL> delet from item
+SP2-0734: unknown command beginning "delet from..." - rest of line ignored.
+SQL> delet from item where id='i5';
+SP2-0734: unknown command beginning "delet from..." - rest of line ignored.
+SQL> delete from item where id='i5';
+
+1 row deleted.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+i5    vanilla cack         bakery item                2000 good                 
+01-JAN-16                                                                       
+                                                                                
+
+SQL> savepoint i3;
+
+Savepoint created.
+
+SQL> delete from item where id='i5';
+
+1 row deleted.
+
+SQL> select *from item;
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i1    dairymilk            chocolate                   500 good                 
+12-AUG-00                                                                       
+                                                                                
+i2    kajukatri            mithai                     1000 verygood             
+15-AUG-26                                                                       
+                                                                                
+i3    pizza                fastfood                    350 average              
+20-FEB-15                                                                       
+                                                                                
+
+ID    NAME                 TYPE                      PRICE QUALITY              
+----- -------------------- -------------------- ---------- -------------------- 
+ITEM_PACK                                                                       
+---------                                                                       
+i4    orangejuice          juice                        50 best                 
+05-FEB-16                                                                       
+                                                                                
+
+SQL> rollback to i3;
+
+Rollback complete.
+
+SQL> alter table item add triper varchar
+  2  
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> alter table item add triper varchar(20);
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+ TRIPER                                             VARCHAR2(20)
+
+SQL> insert into item values('i6','journey','hotel book',800,'very good','40-mar-2026');
+insert into item values('i6','journey','hotel book',800,'very good','40-mar-2026')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> alter table item add id varchar(6);
+alter table item add id varchar(6)
+                     *
+ERROR at line 1:
+ORA-01430: column being added already exists in table 
+
+
+SQL> alter table item drop column triper;
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(5)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> alter table item modify id varchar(6);
+
+Table altered.
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(6)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+
+SQL> alter table item add varchar(20
+  2  
+SQL> alter table item add triper varchar(20);
+
+Table altered.
+
+SQL> insert into item values('i6','journey','books',600,'excellent','14-mar-2026');
+insert into item values('i6','journey','books',600,'excellent','14-mar-2026')
+            *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> desc item;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                                 VARCHAR2(6)
+ NAME                                               VARCHAR2(20)
+ TYPE                                               VARCHAR2(20)
+ PRICE                                              NUMBER(38)
+ QUALITY                                            VARCHAR2(20)
+ ITEM_PACK_DATE                                     DATE
+ TRIPER                                             VARCHAR2(20)
+
+SQL> alter table item drop column triper;
+
+Table altered.
+
+SQL> insert into item values('i6','journey','travel',600,'excellent','14-mar-2026');
+
+1 row created.
+
+SQL> select *from item;
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i1     dairymilk            chocolate                   500 good                
+12-AUG-00                                                                       
+                                                                                
+i2     kajukatri            mithai                     1000 verygood            
+15-AUG-26                                                                       
+                                                                                
+i3     pizza                fastfood                    350 average             
+20-FEB-15                                                                       
+                                                                                
+
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i4     orangejuice          juice                        50 best                
+05-FEB-16                                                                       
+                                                                                
+i5     vanilla cack         bakery item                2000 good                
+01-JAN-16                                                                       
+                                                                                
+i6     journey              travel                      600 excellent           
+14-MAR-26                                                                       
+                                                                                
 
 6 rows selected.
 
-SQL> select *from customers;
+SQL> column item_pack format a15;
+SQL> select * from item;
 
-CNAME           CITY                                                            
---------------- ---------------                                                 
-anil            delhi                                                           
-mehul           baroda                                                          
-mandar          patna                                                           
-madhuri         nagpur                                                          
-pramod          nagpur                                                          
-sandip          surat                                                           
-shivani         bombay                                                          
-kranti          bombay                                                          
-minu            bombay                                                          
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i1     dairymilk            chocolate                   500 good                
+12-AUG-00                                                                       
+                                                                                
+i2     kajukatri            mithai                     1000 verygood            
+15-AUG-26                                                                       
+                                                                                
+i3     pizza                fastfood                    350 average             
+20-FEB-15                                                                       
+                                                                                
 
-9 rows selected.
+ID     NAME                 TYPE                      PRICE QUALITY             
+------ -------------------- -------------------- ---------- --------------------
+ITEM_PACK                                                                       
+---------                                                                       
+i4     orangejuice          juice                        50 best                
+05-FEB-16                                                                       
+                                                                                
+i5     vanilla cack         bakery item                2000 good                
+01-JAN-16                                                                       
+                                                                                
+i6     journey              travel                      600 excellent           
+14-MAR-26                                                                       
+                                                                                
 
-SQL> select *from branch;
+6 rows selected.
 
-BNAME           CITY                                                            
---------------- ---------------                                                 
-vrce            nagpur                                                          
-ajni            nagpur                                                          
-karolbagh       delhi                                                           
-chandi          delhi                                                           
-m g road        bangalore                                                       
-andheri         bombay                                                          
-virar           bombay                                                          
-nehru place     delhi                                                           
-powai           bombay                                                          
-anil            calcutta                                                        
+SQL> column name formate a15;
+SP2-0158: unknown COLUMN option "formate"
+SQL> set linesize 120;
+SQL> select *from item;
 
-10 rows selected.
+ID     NAME                 TYPE                      PRICE QUALITY              ITEM_PACK                              
+------ -------------------- -------------------- ---------- -------------------- ---------                              
+i1     dairymilk            chocolate                   500 good                 12-AUG-00                              
+i2     kajukatri            mithai                     1000 verygood             15-AUG-26                              
+i3     pizza                fastfood                    350 average              20-FEB-15                              
+i4     orangejuice          juice                        50 best                 05-FEB-16                              
+i5     vanilla cack         bakery item                2000 good                 01-JAN-16                              
+i6     journey              travel                      600 excellent            14-MAR-26                              
 
-SQL> select actno,amount from deposit;
-
-     ACTNO     AMOUNT                                                           
----------- ----------                                                           
-       100       1000                                                           
-       101       5000                                                           
-       102       3500                                                           
-       104       1200                                                           
-       105       3000                                                           
-       106       2000                                                           
-       107      10000                                                           
-       108       5000                                                           
-       109       7000                                                           
-
-9 rows selected.
-
-SQL> select cname from deposit
-  2  where amount>5000;
-
-CNAME                                                                           
----------------                                                                 
-shivani                                                                         
-minu                                                                            
-
-SQL> select cname
-  2  from deposit
-  3  where adate>to_date('01-mar-95');
-
-CNAME                                                                           
----------------                                                                 
-sunil                                                                           
-mehul                                                                           
-madhuri                                                                         
-pramod                                                                          
-sandip                                                                          
-shivani                                                                         
-kranti                                                                          
-minu                                                                            
-
-8 rows selected.
-
-SQL> select sunil from deposit;
-select sunil from deposit
-       *
-ERROR at line 1:
-ORA-00904: "SUNIL": invalid identifier 
-
-
-SQL> select cname,pramod from deposit;
-select cname,pramod from deposit
-             *
-ERROR at line 1:
-ORA-00904: "PRAMOD": invalid identifier 
-
-
-SQL> select cname
-  2  from deposit
-  3  where city='delhi';
-where city='delhi'
-      *
-ERROR at line 3:
-ORA-00904: "CITY": invalid identifier 
-
-
-SQL> select cname
-  2  from deposit
-  3  where bname='virar';
-
-CNAME                                                                           
----------------                                                                 
-shivani                                                                         
+6 rows selected.
 
 SQL> commit;
 
