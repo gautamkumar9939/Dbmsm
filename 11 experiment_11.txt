@@ -1,0 +1,90 @@
+
+Here are Oracle SQL queries using the **DUAL** table for each requirement:
+
+---
+
+### 1. Add 15 days to the current date
+
+```sql
+SELECT SYSDATE + 15 AS NEW_DATE FROM DUAL;
+```
+
+---
+
+### 2. Add and subtract 5 months from the current date
+
+```sql
+SELECT 
+    ADD_MONTHS(SYSDATE, 5) AS ADD_5_MONTHS,
+    ADD_MONTHS(SYSDATE, -5) AS SUB_5_MONTHS
+FROM DUAL;
+```
+
+---
+
+### 3. ASCII equivalent of character 'M'
+
+```sql
+SELECT ASCII('M') AS ASCII_VALUE FROM DUAL;
+```
+
+---
+
+### 4. Character equivalent of ASCII 67, 65, 84
+
+```sql
+SELECT 
+    CHR(67) AS CHAR1,
+    CHR(65) AS CHAR2,
+    CHR(84) AS CHAR3
+FROM DUAL;
+```
+
+---
+
+### 5. Last day of the current month
+
+```sql
+SELECT LAST_DAY(SYSDATE) AS LAST_DAY_OF_MONTH FROM DUAL;
+```
+
+---
+
+### 6. Date difference between current date and 20/05/2015
+
+```sql
+SELECT SYSDATE - TO_DATE('20-05-2015','DD-MM-YYYY') AS DATE_DIFF FROM DUAL;
+```
+
+---
+
+### 7. Number of months between current date and 03/03/2016
+
+```sql
+SELECT MONTHS_BETWEEN(SYSDATE, TO_DATE('03-03-2016','DD-MM-YYYY')) AS MONTH_DIFF 
+FROM DUAL;
+```
+
+---
+
+### 8. Second occurrence of 'or' from third position in 'corporate floor'
+
+```sql
+SELECT INSTR('corporate floor', 'or', 3, 2) AS POSITION FROM DUAL;
+```
+
+---
+
+### 9. Capitalize first letter of each word ('marwadi university')
+
+```sql
+SELECT INITCAP('marwadi university') AS FORMATTED_TEXT FROM DUAL;
+```
+
+---
+
+### 10. Username and user ID of currently logged-in user
+
+```sql
+SELECT USER AS USERNAME, USERENV('SESSIONID') AS USER_ID FROM DUAL;
+
